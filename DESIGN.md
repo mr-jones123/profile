@@ -6,15 +6,15 @@ Industrial editorial event site with a pale technical canvas, hard grid lines, o
 Use this as inspiration, not a clone. Keep the structure, rhythm, and motion language. Replace GitHub marks, Octocat art, and event-specific copy with project-owned assets.
 
 ## 2. Color Palette & Roles
-- **Fog Canvas** (#EFF3F1) — primary page background, never pure white.
-- **Grid Line** (#D2DAD5) — 1px section dividers, card boundaries, nav borders.
-- **Ink Black** (#050505) — primary text and oversized display type. Avoid #000000.
-- **Muted Code Gray** (#5D6862) — mono labels, metadata, secondary copy.
-- **Universe Green** (#078D32) — only primary accent. CTAs, tiny status squares, active states.
-- **Ticker Violet** (#5B3DF5) — marquee strip only, never buttons or glows.
-- **Ticker Mint** (#83E88F) — marquee strip and graphic tiles only.
-- **Ticker Brass** (#BBA72F) — marquee strip and graphic tiles only.
-- **Deep Aubergine** (#211A33) — dark ticker segment and rare graphic contrast.
+- **Fog Canvas** (#F4F0E7) — primary page background, never pure white.
+- **Grid Line** (#D8D0C0) — 1px section dividers, card boundaries, nav borders.
+- **Ink Black** (#10100E) — primary text and oversized display type. Avoid #000000.
+- **Muted Code Gray** (#6D675C) — mono labels, metadata, secondary copy.
+- **Aegean Blue** (#214E8A) — primary accent. CTAs, tiny status squares, active states.
+- **Rust Clay** (#A44836) — marquee strip and graphic tiles only.
+- **Mango Ochre** (#D6A72C) — marquee strip and graphic tiles only.
+- **Patina Teal** (#3D7C70) — marquee strip and graphic tiles only.
+- **Night Plum** (#2B2433) — dark ticker segment and rare graphic contrast.
 
 No gradients for core UI. Color should appear as flat blocks, tiny pixels, or media accents.
 

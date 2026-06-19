@@ -1,13 +1,48 @@
 @import "tailwindcss";
 
 :root {
-  --background: #eff3f1;
-  --foreground: #050505;
+  --canvas: #f4f0e7;
+  --surface: #ece6d8;
+  --grid: #d8d0c0;
+  --ink: #10100e;
+  --muted: #6d675c;
+  --accent: #214e8a;
+  --rust: #a44836;
+  --ochre: #d6a72c;
+  --teal: #3d7c70;
+  --plum: #2b2433;
+  --background: var(--canvas);
+  --foreground: var(--ink);
+}
+
+:root[data-theme="dark"] {
+  --canvas: #111412;
+  --surface: #1b201d;
+  --grid: #343a35;
+  --ink: #f1eadf;
+  --muted: #afa79a;
+  --accent: #7fa8db;
+  --rust: #c66b58;
+  --ochre: #d8b65a;
+  --teal: #70a99c;
+  --plum: #65577d;
+  --background: var(--canvas);
+  --foreground: var(--ink);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-grid: var(--grid);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-rust: var(--rust);
+  --color-ochre: var(--ochre);
+  --color-teal: var(--teal);
+  --color-plum: var(--plum);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-instrument-serif);
@@ -29,8 +64,8 @@ body {
 }
 
 ::selection {
-  background: #078d32;
-  color: #eff3f1;
+  background: var(--accent);
+  color: var(--canvas);
 }
 
 .flag-word {
@@ -57,15 +92,9 @@ body {
   opacity: 1;
 }
 
-.pixel-field {
-  background-image:
-    linear-gradient(to right, transparent calc(20% - 1px), #d2dad5 calc(20% - 1px), #d2dad5 20%, transparent 20%),
-    repeating-linear-gradient(to bottom, transparent 0 6rem, #d2dad5 6rem calc(6rem + 1px));
-}
-
 .marquee {
   overflow: hidden;
-  background: #eff3f1;
+  background: var(--canvas);
 }
 
 .marquee-track {
@@ -78,7 +107,7 @@ body {
   display: flex;
   min-width: max-content;
   align-items: center;
-  border-right: 1px solid #050505;
+  border-right: 1px solid var(--ink);
   padding: 0 1.25rem;
 }
 
