@@ -54,6 +54,14 @@ const projects = [
     meta: "sqlite / tree-sitter / mcp / pi",
   },
   {
+    label: "speech dataset cli",
+    name: "dka",
+    href: "https://github.com/mr-jones123/dka",
+    copy:
+      "A Python CLI for turning raw Philippine-language speech recordings and transcripts into clean WAV clips, normalized metadata, train/dev/test splits, quality reports, dataset cards, and Hugging Face-ready ASR exports.",
+    meta: "python / uv / ffmpeg / hugging face",
+  },
+  {
     label: "agentic slack",
     name: "OctoAI",
     href: "https://github.com/mr-jones123/iforgot-OctoAI",
@@ -223,7 +231,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 [&>article]:border-b [&>article]:border-[var(--grid)] [&>article:last-child]:border-b-0 md:[&>article:nth-child(odd)]:border-r">
+          <div className="grid items-stretch md:grid-cols-2 [&>article]:border-b [&>article]:border-[var(--grid)] md:[&>article:nth-child(odd)]:border-r">
             {projects.map((project) => (
               <ProjectPanel key={project.name} project={project} />
             ))}
@@ -338,10 +346,10 @@ function CompanyRow({ company }: { company: (typeof companies)[number] }) {
 }
 
 function ProjectPanel({ project }: { project: (typeof projects)[number] }) {
-  const isOcto = project.name === "OctoAI";
+  const hasTrunks = project.name === "dka";
 
   return (
-    <article className={`reveal bg-[var(--canvas)] ${isOcto ? "md:col-span-2 md:grid md:grid-cols-2" : ""}`}>
+    <article className="reveal flex h-full flex-col bg-[var(--canvas)]">
       <div className="p-[clamp(1.25rem,4vw,3rem)]">
         <p className="font-mono text-sm lowercase tracking-[0.2em] text-[var(--muted)]">{project.label}</p>
         <h3 className="mt-10 font-mono text-[clamp(3rem,7vw,8rem)] font-bold uppercase leading-[0.82] tracking-[-0.08em]">
@@ -355,9 +363,9 @@ function ProjectPanel({ project }: { project: (typeof projects)[number] }) {
           </a>
         </div>
       </div>
-      {isOcto ? (
-        <div className="relative min-h-[28rem] overflow-hidden border-t border-[var(--grid)] bg-[var(--grid)] md:border-l md:border-t-0">
-          <Image src="/trunks.png" alt="Pixel art of Trunks powering up" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover object-center contrast-125" />
+      {hasTrunks ? (
+        <div className="mt-auto border-t border-[var(--grid)] bg-[var(--grid)]">
+          <Image src="/trunks.png" alt="Pixel art of Trunks powering up" width={2048} height={2048} sizes="(min-width: 768px) 50vw, 100vw" className="h-auto w-full contrast-125" />
         </div>
       ) : null}
     </article>
