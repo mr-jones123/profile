@@ -21,17 +21,17 @@ const newsreader = Newsreader({
 export const metadata: Metadata = {
   title: "Xy - The Dev",
   description:
-    "Xynil Jhed Lacap is a Filipino full-stack developer building tax software, AI systems, document intelligence, and agent harnesses. He works across Next.js, Python, automation, and AI tooling to turn messy workflows into reliable products.",
+    "Xynil Jhed Lacap is a Filipino full-stack developer building tax software, brokerage and mortgage AI systems with LangChain and RAG, FastAPI services, and agent harnesses. He works across Next.js, Python, and AI tooling to turn messy workflows into reliable products.",
   openGraph: {
     title: "Xy - The Dev",
     description:
-      "Xynil Jhed Lacap is a Filipino full-stack developer building tax software, AI systems, document intelligence, and agent harnesses. He works across Next.js, Python, automation, and AI tooling to turn messy workflows into reliable products.",
+      "Xynil Jhed Lacap is a Filipino full-stack developer building tax software, brokerage and mortgage AI systems with LangChain and RAG, FastAPI services, and agent harnesses. He works across Next.js, Python, and AI tooling to turn messy workflows into reliable products.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Xy - The Dev",
     description:
-      "Xynil Jhed Lacap is a Filipino full-stack developer building tax software, AI systems, document intelligence, and agent harnesses. He works across Next.js, Python, automation, and AI tooling to turn messy workflows into reliable products.",
+      "Xynil Jhed Lacap is a Filipino full-stack developer building tax software, brokerage and mortgage AI systems with LangChain and RAG, FastAPI services, and agent harnesses. He works across Next.js, Python, and AI tooling to turn messy workflows into reliable products.",
   },
   icons: {
     icon: "/xy-the-dev-icon.jpg",
@@ -45,11 +45,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add("motion-ready");`,
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

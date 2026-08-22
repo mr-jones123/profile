@@ -1,76 +1,59 @@
-# Design System: GitHub Universe Inspired
+# Design System: Dark Star
 
 ## 1. Visual Theme & Atmosphere
-Industrial editorial event site with a pale technical canvas, hard grid lines, oversized wordmarks, documentary media, and restrained code-like labels. Density is medium, variance is high, motion is active but mechanical. The page should feel like a conference identity system turned into an interface.
-
-Use this as inspiration, not a clone. Keep the structure, rhythm, and motion language. Replace GitHub marks, Octocat art, and event-specific copy with project-owned assets.
+Dark-only rework of the GitHub Universe-inspired editorial grid, tuned to the Dark Star aesthetic (League of Legends skin line): a violet-black void, drifting magenta/cyan nebulae, an instanced starfield that reacts to scroll and pointer, and a red-black "void ring" mark in the hero. The subject's own copy — "the tech universe is my canvas, I paint star systems" — is literal. Content sits on translucent solid-glass panels so type stays readable over the cosmos. Use this as inspiration, not a clone.
 
 ## 2. Color Palette & Roles
-- **Fog Canvas** (#F4F0E7) — primary page background, never pure white.
-- **Grid Line** (#D8D0C0) — 1px section dividers, card boundaries, nav borders.
-- **Ink Black** (#10100E) — primary text and oversized display type. Avoid #000000.
-- **Muted Code Gray** (#6D675C) — mono labels, metadata, secondary copy.
-- **Aegean Blue** (#214E8A) — primary accent. CTAs, tiny status squares, active states.
-- **Rust Clay** (#A44836) — marquee strip and graphic tiles only.
-- **Mango Ochre** (#D6A72C) — marquee strip and graphic tiles only.
-- **Patina Teal** (#3D7C70) — marquee strip and graphic tiles only.
-- **Night Plum** (#2B2433) — dark ticker segment and rare graphic contrast.
+- **Void Canvas** (#07060B) — primary page background. Never pure #000.
+- **Surface** (#0D0B14) / **Raised** (#141021) — nested cells, hover fills, secondary CTA.
+- **Panel** rgba(13,11,20,0.88) — every text-bearing cell; keeps copy legible above the starfield.
+- **Grid Line** (#221D33) and **Grid Strong** (#322A4A) — 1px dividers with violet cast.
+- **Ink** (#F2EFF7) — primary text. **Muted** (#A49CC0) / **Faint** (#5E5678) — labels and metadata.
+- **Violet Accent** (#C9A2FF) — CTAs, signal pixels, project wordmarks, marquee tint, github nav cell. Accent fills always pair with `--accent-ink` (#12091F).
+- **Energy tints** (backgrounds only): Magenta #E14FD2, Cyan #35D6FF, Void Red #FF3B47 — nebula gradients, starfield stars, void-ring glow.
+- **PH Flag Blue/Red** (#5A8DE8 / #EF5560) — reserved exclusively for the "Filipino" wordmark split.
 
-No gradients for core UI. Color should appear as flat blocks, tiny pixels, or media accents.
+No light mode. `color-scheme: dark` is set at :root. Energy tints never appear as text color.
 
-## 3. Typography Rules
-- **Display:** Geist Mono, ultra-wide uppercase wordmarks. Use `clamp(3rem, 13vw, 12rem)`, `font-weight: 700`, `letter-spacing: -0.07em`, `line-height: 0.82`.
-- **Headlines:** Geist Serif for editorial section titles. Use `clamp(2.25rem, 5vw, 5rem)`, `line-height: 1.03`, `letter-spacing: -0.045em`.
-- **Body:** Geist Serif, 20px to 32px, relaxed but not soft. Max line length 52ch.
-- **Metadata:** Geist Mono, 14px to 18px, lowercase where possible, slash-separated, terminal-like labels such as `dev.learn()` or `agenda/`.
-- **Buttons:** Geist Mono or Geist Serif at 16px to 18px. Keep labels plain and direct.
+## 3. Signature Elements
+- **Starfield** (`app/Starfield.tsx`): one instanced THREE.Points draw call (~1.1k soft sprites), custom GLSL twinkle + depth parallax on scroll, pointer-tilt group rotation, velocity-driven size. Violet-bone majority with magenta/cyan/red rare tints. `next/dynamic ssr:false`; skipped under reduced motion.
+- **Nebula** (`.nebula`): two drifting radial-gradient layers, pure CSS keyframes, GPU-composited transforms only.
+- **Void Ring** (`.void-ring`): radial red-black eclipse with cyan pulse halo — the hero's Dark Star mark.
 
-Do not use Inter. Do not use generic serif fallbacks as the visible design language.
+## 4. Typography Rules
+- **Display:** Geist Mono, ultra-wide uppercase wordmarks. `clamp(3rem, 13vw, 12rem)`, weight 700, tight negative tracking, line-height 0.82. Project names (Zenin, Toji, dka, OctoAI) render in violet accent.
+- **Headlines:** Newsreader (serif) for editorial section titles, `clamp(2.5rem, 5vw, 5.5rem)`+, line-height ~0.95.
+- **Body:** Newsreader, 20–32px, max 52ch.
+- **Metadata:** Geist Mono 14–18px, lowercase, slash-separated terminal labels (`dev.myth()`, `career.log()`).
+- Do not introduce Inter or any new family; three variables already loaded in layout.tsx.
 
-## 4. Layout Principles
-- Build the whole page on a visible 1px grid. Every major section has top, bottom, and vertical divider lines.
-- Use asymmetric two-column compositions on desktop: media on one side, copy and CTA modules on the other.
-- Hero starts with a huge full-width wordmark, then a bordered media/content grid below it.
-- Prefer rectangles with square corners or tiny radii. No pill cards, no soft SaaS containers.
-- Leave intentional empty grid cells. Blank space should look structural, not unfinished.
-- Use photographic or video blocks as hard-edged rectangles. Crop boldly with `object-fit: cover`.
-- CTA modules span the full width of their grid cell. Primary CTA is a flat green rectangular block.
-- Repeat code-label/content/media sections in alternating positions instead of equal card rows.
 
-## 5. Scroll, Text, and Motion
-- Header stays sticky at the top with visible grid borders.
-- Use horizontal marquee strips after major sections. They scroll continuously and contain repeated offer/status text on flat color blocks.
-- Text reveals should feel mechanical: line-mask reveal upward, opacity from 0 to 1, 80ms to 140ms stagger.
-- Media should reveal by clipping from one edge or sliding 24px while fading in. No zoomy parallax.
-- Tiny accent squares may blink or step between green and violet, like terminal pixels.
-- Buttons translate by 1px on press and arrow icons move 4px diagonally on hover.
-- Animate only `transform`, `opacity`, and `clip-path`. Avoid blur, glow, bouncing, and elastic effects.
-- Respect `prefers-reduced-motion`: freeze marquees and show all text without staged reveals.
+## 5. Layout Principles
+Unchanged from the light system: full-page visible 1px grid, asymmetric two-column compositions, square corners, intentional empty cells, hard-edged media blocks, alternating code-label/content sections. Max content width 1440px. Mobile: single column, no horizontal overflow, ≥44px touch targets. Every text-bearing cell carries the `panel` glass background.
 
-## 6. Components
-- **Navigation:** sticky horizontal grid bar. Logo cell left, link cells with borders, auth/action cells right. Mobile collapses to logo plus hamburger.
-- **Primary CTA:** full-width green rectangle, 16px to 24px padding, white text, arrow in the far right corner. No shadow.
-- **Secondary links:** plain text inside bordered cells. Hover changes background to slightly darker Fog Canvas.
-- **Marquee:** fixed-height strip, 44px to 56px desktop, 40px mobile. Alternating violet, mint, brass, and aubergine blocks.
-- **Media blocks:** bordered, square-corner rectangles with small circular playback control if needed.
-- **Info panels:** bordered grid cells with metadata on top, large text below, CTA at bottom when needed.
-- **Timeline/agenda:** mono time labels plus serif descriptions, separated by grid lines. Avoid card shadows.
+## 6. Scroll, Text, and Motion
+- **Smooth scroll:** Lenis (lerp 0.1), driven by a single animejs `createTimer` rAF loop — one animation frame for the whole page. Anchor links route through Lenis (`anchors: true`). CSS `scroll-behavior` disabled when Lenis owns the page.
+- **Hero:** per-character spring rise (`spring({stiffness:72, damping:10})`, 30ms stagger). Springs overshoot slightly; nothing bounces forever.
+- **Reveals:** every `.reveal` gets its own `onScroll({enter:"bottom-=40"})` observer linked via `autoplay`, so entry stagger follows scroll position. Spring ease, translateY 28px + fade.
+- **Marquee:** animejs-driven linear loop with 4px snapping (mechanical ticker feel); pauses under reduced motion.
+- **Arrows/CTAs:** spring hover nudge (x+5/y−5, slight scale), spring return on leave. Press feedback via `active:translate-y-px`.
+- **Starfield:** fixed WebGL canvas behind content (z-0), pointer-events none. Depth parallax on scroll, eased group tilt toward pointer, velocity-driven star size. One instanced draw call (~1.1k points), custom GLSL twinkle. Loaded via `next/dynamic ssr:false`; skipped entirely under `prefers-reduced-motion`.
+- Animate only `transform`, `opacity`. No blur/glow filters. All motion gated behind `prefers-reduced-motion` checks; `.motion-ready` is added by an inline bootstrap script before first paint so hidden states never flash.
 
-## 7. Responsive Rules
-- **Desktop, 1200px and up:** full nav, huge wordmark, hero grid can be 50/50 or 52/48. Keep maximum content width near 1440px.
-- **Tablet, 768px to 1199px:** keep grid, but center hero media in a narrower column. Wordmark remains oversized. CTA and text panels stack under media.
-- **Mobile, below 768px:** single column. Header is logo plus hamburger. Wordmark uses 48px to 64px and must not overflow. Media appears before event details, copy, then CTA.
-- Mobile horizontal overflow is a failure. Use `overflow-x: clip` on wrappers and test at 360px width.
-- Touch targets are at least 44px high.
-- Section padding: `clamp(1.25rem, 4vw, 3rem)`. Large vertical gaps come from empty grid rows, not random margins.
+## 7. Components
+- **Navigation:** sticky, bordered, translucent canvas with backdrop blur. Logo cell left; companies/projects/contact/github cells right; mobile collapses to menu details. Theme toggle removed — site is permanently dark.
+- **Primary CTA:** flat violet rectangle, `--accent-ink` text, arrow far right. Secondary CTA uses Raised surface.
+- **Marquee:** 56px strip, violet-tinted blocks alternating with plain canvas cells separated by strong grid borders.
+- **Info panels/company rows/project panels:** bordered grid cells as before; hover surfaces use Surface token.
+- **Pixel art:** Trunks image desaturated (`saturate-[0.75]`) to sit in the dark palette.
 
-## 8. Anti-Patterns (Banned)
-- No centered generic hero with subtitle and two buttons.
-- No rounded gradient SaaS cards.
-- No neon glows or purple/blue AI gradients.
-- No three equal feature cards.
+## 8. Responsive Rules
+Same breakpoints as before: desktop full nav and huge wordmark; tablet keeps grid; mobile single column with hamburger. Wordmark clamps so it never overflows at 360px.
+
+## 9. Anti-Patterns
+- No glassmorphism blur-cards beyond the `panel` system; no neon text glows. The void-ring and nebula gradients are the sanctioned atmosphere — everything else stays flat.
+- No light theme, no theme toggle UI.
+- No bouncing chevrons, scroll-jacking, or "scroll to explore" text.
 - No emojis.
-- No fake dashboards unless the product actually needs one.
-- No scroll arrows, bouncing chevrons, or “scroll to explore” text.
-- No decorative animations that do not reinforce the grid, ticker, media, or text reveal system.
-- No pure black backgrounds. This design is light, gridded, and editorial.
+- No decorative motion outside the reveal/ticker/starfield/spring-hover systems.
+- Never animate layout properties; never run a second rAF loop alongside the shared engine timer.

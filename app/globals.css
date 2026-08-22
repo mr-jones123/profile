@@ -1,33 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --canvas: #f4f0e7;
-  --surface: #ece6d8;
-  --grid: #d8d0c0;
-  --ink: #10100e;
-  --muted: #6d675c;
-  --accent: #214e8a;
-  --rust: #a44836;
-  --ochre: #d6a72c;
-  --teal: #3d7c70;
-  --plum: #2b2433;
-  --background: var(--canvas);
-  --foreground: var(--ink);
-}
+  /* Dark Star — void palette */
+  --canvas: #07060b;
+  --surface: #0d0b14;
+  --raised: #141021;
+  --panel: #0e0c16;
+  --panel-solid: #0e0c16;
+  --grid: #221d33;
+  --grid-strong: #322a4a;
+  --ink: #f2eff7;
+  --muted: #a49cc0;
+  --faint: #5e5678;
+  --accent: #c9a2ff;
+  --accent-ink: #12091f;
+  --accent-dim: rgba(201, 162, 255, 0.14);
+  --magenta: #e14fd2;
+  --cyan: #35d6ff;
+  --void-red: #ff3b47;
+  --flag-blue: #5a8de8;
+  --flag-red: #ef5560;
 
-:root[data-theme="dark"] {
-  --canvas: #111412;
-  --surface: #1b201d;
-  --grid: #343a35;
-  --ink: #f1eadf;
-  --muted: #afa79a;
-  --accent: #7fa8db;
-  --rust: #c66b58;
-  --ochre: #d8b65a;
-  --teal: #70a99c;
-  --plum: #65577d;
   --background: var(--canvas);
   --foreground: var(--ink);
+
+  color-scheme: dark;
 }
 
 @theme inline {
@@ -35,15 +32,19 @@
   --color-foreground: var(--foreground);
   --color-canvas: var(--canvas);
   --color-surface: var(--surface);
+  --color-raised: var(--raised);
   --color-grid: var(--grid);
+  --color-grid-strong: var(--grid-strong);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
+  --color-panel: var(--panel);
+  --color-panel-solid: var(--panel-solid);
+  --color-magenta: var(--magenta);
+  --color-cyan: var(--cyan);
+  --color-void-red: var(--void-red);
   --color-accent: var(--accent);
-  --color-rust: var(--rust);
-  --color-ochre: var(--ochre);
-  --color-teal: var(--teal);
-  --color-plum: var(--plum);
   --font-sans: var(--font-geist-sans);
+  --color-accent-ink: var(--accent-ink);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-instrument-serif);
 }
@@ -53,43 +54,127 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: initial; /* Lenis drives scrolling */
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
 body {
   margin: 0;
-  background: var(--background);
+  background: var(--canvas);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--canvas);
+  color: var(--accent-ink);
+}
+
+/* Focus visibility on dark canvas */
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .flag-word {
-  font-weight: 800;
-  text-decoration-line: underline;
-  text-decoration-color: #fcd116;
-  text-decoration-thickness: 0.12em;
-  text-underline-offset: 0.12em;
+  text-shadow: none;
 }
 
 .flag-blue {
-  color: #0038a8;
+  color: var(--flag-blue);
 }
 
 .flag-red {
-  color: #ce1126;
+  color: var(--flag-red);
 }
 
+/* Pre-hydration state: content hidden only when JS will animate it.
+   The inline bootstrap script in layout.tsx adds .motion-ready before
+   first paint, so there is never a flash of hidden or visible content. */
 .reveal {
-  opacity: 0;
+  opacity: 1;
 }
 
 .motion-ready .reveal {
-  opacity: 1;
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+/* Starfield canvas sits behind all content.
+   Canvas is a replaced element: inset alone won't stretch it. */
+.starfield {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Nebula: two drifting radial fields, pure CSS, GPU-composited */
+.nebula {
+  position: fixed;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(42% 34% at 18% 22%, rgba(225, 79, 210, 0.13), transparent 65%),
+    radial-gradient(50% 40% at 82% 70%, rgba(53, 214, 255, 0.09), transparent 62%),
+    radial-gradient(36% 30% at 60% 15%, rgba(120, 80, 220, 0.1), transparent 68%);
+}
+
+.nebula::before,
+.nebula::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+
+.nebula::before {
+  background: radial-gradient(30% 26% at 70% 30%, rgba(201, 162, 255, 0.08), transparent 70%);
+  animation: nebula-drift-a 46s ease-in-out infinite alternate;
+}
+
+.nebula::after {
+  background: radial-gradient(26% 22% at 28% 72%, rgba(225, 79, 210, 0.07), transparent 70%);
+  animation: nebula-drift-b 58s ease-in-out infinite alternate;
+}
+
+@keyframes nebula-drift-a {
+  to {
+    transform: translate3d(6%, -4%, 0) scale(1.12);
+  }
+}
+
+@keyframes nebula-drift-b {
+  to {
+    transform: translate3d(-5%, 5%, 0) scale(1.15);
+  }
+}
+
+/* Content panels read as solid glass over the void.
+   Fully opaque: bright stars must never bleed through copy. */
+.panel {
+  background: var(--panel-solid);
+}
+
+main {
+  position: relative;
+  z-index: 1;
 }
 
 .marquee {
@@ -100,16 +185,18 @@ body {
 .marquee-track {
   display: flex;
   width: max-content;
-  animation: marquee-slide 32s steps(120) infinite;
+  height: 3.5rem;
+  animation: marquee-slide 40s linear infinite;
 }
 
 .marquee span {
   display: flex;
   min-width: max-content;
   align-items: center;
-  border-right: 1px solid var(--ink);
-  padding: 0 1.25rem;
+  border-right: 1px solid var(--grid-strong);
+  padding: 0 2rem;
 }
+
 
 @keyframes marquee-slide {
   to {
@@ -134,10 +221,15 @@ body {
     animation: none;
   }
 
-  .reveal,
-  .wordmark-char {
+  .nebula::before,
+  .nebula::after {
+    animation: none;
+  }
+
+  .motion-ready .reveal {
     opacity: 1 !important;
     transform: none !important;
     clip-path: none !important;
   }
 }
+
